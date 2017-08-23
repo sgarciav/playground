@@ -1,7 +1,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "../helper_functions/helper_functions.h"
+#include "../include/helper_functions.h"
 
 // print n spaces
 void printSpace (int n)

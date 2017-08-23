@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-#include "../helper_functions/helper_functions.h"
+#include "../include/helper_functions.h"
 
 using namespace std;
 
