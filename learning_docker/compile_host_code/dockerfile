@@ -1,0 +1,15 @@
+###############################################################################
+# Dockerfile to build local code
+###############################################################################
+FROM ubuntu:16.04
+
+RUN apt-get update && \
+    apt-get install -y nano g++
+
+# copy code from local directory into image
+COPY . /root
+WORKDIR /root
+
+# compile source code
+RUN mkdir /root/obj && \
+    g++ -o /root/obj/fibonacci /root/src/fibonacci.cpp
