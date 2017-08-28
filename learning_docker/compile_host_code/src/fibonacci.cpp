@@ -42,8 +42,5 @@ int main(int argc, char *argv[])
      }
      cout << endl;
 
-     // herro
-     cout << "herro!" << endl;
-
      return 0;
 }
