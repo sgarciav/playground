@@ -10,22 +10,43 @@ container.
 
 # Build inside Docker Container
 
-  * Install [Docker-Compose](https://docs.docker.com/compose/install/#prerequisites)
-  if you have not done so already:
+1. Install [Docker-Compose](https://docs.docker.com/compose/install/#prerequisites)
+if you have not done so already:
 
 		$ sudo curl -L https://github.com/docker/compose/releases/download/1.15.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 
-  * Build Docker image:
+2. Build Docker image:
 
 		$ cd path/to/compile_host_code
 		$ docker build -t temporary_image -f dockerfiles/dockerfile .
 
-  * Run the container with docker-compose to bind-mount some source directories:
+3. Run the container with docker-compose to bind-mount some source directories:
 
 		$ cd path/to/compile_host_code/dockerfiles
 		$ docker-compose up -d
 		$ docker attach [container name]
 
-**NOTES**:
-  * If nothing shows up on screen after the last command, press ENTER to
+	**NOTE**: If nothing shows up on screen after the last command, press ENTER to
 	access the terminal.
+
+## Problem: Docker Container Can't Access Internet
+
+Taken from: [SCRIMMAGE README](https://github.com/gtri/scrimmage/blob/master/README.md)
+
+Docker can have DNS issues. If you can ping a public ip address within a docker
+image (such as 8.8.8.8), but you can't ping archive.ubuntu.com, create the file
+/etc/docker/daemon.json with the following contents:
+
+    {
+        "dns": ["<DNS-IP>", "8.8.8.8"]
+    }
+
+Where <DNS-IP> is the first DNS IP address and <interfacename> is a network
+interface with internet access from the commands:
+
+    $ nmcli dev list | grep 'IP4.DNS'                    # Ubuntu <= 14
+    $ nmcli device show <interfacename> | grep IP4.DNS   # Ubuntu >= 15
+
+Restart docker:
+
+    $ sudo service docker restart
