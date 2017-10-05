@@ -36,6 +36,15 @@ function test_fun()
     fi
 }
 
+function test_cd()
+{
+    echo "testing cd:"
+    echo "-------------------"
+    mkdir sergio_dir1
+    cd $1
+    mkdir $2
+}
+
 temp_var=10
 echo "file input: $1"
 echo ""
@@ -44,4 +53,5 @@ rmfile "$1"
 echo "file input: $1"
 echo ""
 test_fun
-
+work_dir="/home/sgarciav/"
+test_cd $work_dir "second"
