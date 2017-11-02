@@ -1,9 +1,10 @@
-#include<math.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include<string>
-#include<iostream>
-#include<vector>
+#include <Eigen/Dense>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <iostream>
+#include <vector>
 
 using std::cout;
 using std::endl;
@@ -11,56 +12,68 @@ using std::vector;
 
 int main(int argc, char *argv[])
 {
-     printf("%s\n", "Hello World");
+    printf("%s\n", "Hello World");
 
-     for (int i=0; i < 15; i++) {
-	  if (i == 10)
-	       break;
+    for (int i=0; i < 15; i++) {
+        if (i == 10)
+            break;
 
-	  printf("%d) do me \n", i);
-     }
+        printf("%d) do me \n", i);
+    }
 
-     printf("\n out! \n");
-     
-     // compare stirngs
-     std::string str1 = "sergio";
-     std::string str2 = "licia";
-     std::string str3 = "sergio";
-     std::string concat = str1 + str2;
-     
-     bool one_str = str1.compare(str2);
-     bool two_str = str1.compare(str3);
-     cout << "different: " << one_str << endl;
-     cout << "same: " << two_str << endl;
-     cout << concat << endl;
+    printf("\n out! \n");
 
-     // play with vectors
-     vector<double> vec1;
-     for (int i = 0; i < 10; i++) {
-	  vec1.push_back(i);
-     }
-     for (int i = 0; i < vec1.size(); i++) {
-	  cout << vec1[i] << endl;
-     }
+    // compare stirngs
+    std::string str1 = "sergio";
+    std::string str2 = "licia";
+    std::string str3 = "sergio";
+    std::string concat = str1 + str2;
 
-     // test input handling
-     if (argc > 1) {
-	  std::string input = argv[1];
-	  cout << "input: " << input << endl;
-	  cout << "number of inputs: " << argc << endl;
-	  if (argc == 3) {
-	       cout << "ERROR: Need as input the robot name." << endl;
-	       exit(EXIT_FAILURE);
-	  }
-     }
+    bool one_str = str1.compare(str2);
+    bool two_str = str1.compare(str3);
+    cout << "different: " << one_str << endl;
+    cout << "same: " << two_str << endl;
+    cout << concat << endl;
 
-     // test absolute value
-     float one, two, three;
-     one = -1.434;
-     two = 2.434;
-     three = -325.8745;
-     cout << fabs(one) << ", " << fabs(two) << ", " << fabs(three) << endl;
-     
+    // play with vectors
+    vector<double> vec1;
+    for (int i = 0; i < 10; i++) {
+        vec1.push_back(i);
+    }
+    for (int i = 0; i < vec1.size(); i++) {
+        cout << vec1[i] << endl;
+    }
 
-     return 0;
+    // test input handling
+    if (argc > 1) {
+        std::string input = argv[1];
+        cout << "input: " << input << endl;
+        cout << "number of inputs: " << argc << endl;
+        if (argc == 3) {
+            cout << "ERROR: Need as input the robot name." << endl;
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    // test absolute value
+    float one, two, three;
+    one = -1.434;
+    two = 2.434;
+    three = -325.8745;
+    cout << fabs(one) << ", " << fabs(two) << ", " << fabs(three) << endl;
+
+    // test Eigen vector
+    // To compile: g++ -o HelloWorld ../src/HelloWorld.cpp -std=c++11 -I/usr/include/eigen3
+    Eigen::Vector3d p;
+    p << 1,
+        2,
+        3;
+    cout << "eigen vector: " << p << endl;
+
+    // count character occurances in string
+    std::string s = "the answer; should ;be ;; four";
+    size_t n = std::count(s.begin(), s.end(), ';');
+    cout << "; count " << n << endl;
+
+    return 0;
 }

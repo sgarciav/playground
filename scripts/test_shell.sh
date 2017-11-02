@@ -29,10 +29,11 @@ function test_fun()
 {
     echo "global: $GLOBAL_VAR"
     echo "temp: $temp_var"
+    echo "input: $1"
 
     # rosrun turtlesim turtlesim_node
-    if [ ! -f "test_shell.sh" ]; then
-	echo "helloooo "
+    if [ $# -eq 2 ]; then
+	echo "helloooo"
     fi
 }
 
@@ -52,6 +53,4 @@ rmfile "deleteme.txt"
 rmfile "$1"
 echo "file input: $1"
 echo ""
-test_fun
-work_dir="/home/sgarciav/"
-test_cd $work_dir "second"
+test_fun "sergios" "sure"
