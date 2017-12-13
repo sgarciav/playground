@@ -10,6 +10,12 @@ using std::cout;
 using std::endl;
 using std::vector;
 
+template <typename T>
+void print_matrix(T A) {
+    cout << "eigen matrix: " << endl;
+    cout << A << endl;
+}
+
 int main(int argc, char *argv[])
 {
     printf("%s\n", "Hello World");
@@ -68,7 +74,16 @@ int main(int argc, char *argv[])
     p << 1,
         2,
         3;
-    cout << "eigen vector: " << p << endl;
+    cout << "eigen vector: " << endl;
+    cout << p << endl;
+
+    Eigen::MatrixXd P;
+    P.resize(3,3);
+    P << 1, 2, 3,
+        4, 5, 6,
+        7, 8, 9;
+    const int a = 3;
+    print_matrix<Eigen::Matrix<double, a, a>>(P);
 
     // count character occurances in string
     std::string s = "the answer; should ;be ;; four";
