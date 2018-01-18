@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <map>
 
 using std::cout;
 using std::endl;
@@ -89,6 +90,23 @@ int main(int argc, char *argv[])
     std::string s = "the answer; should ;be ;; four";
     size_t n = std::count(s.begin(), s.end(), ';');
     cout << "; count " << n << endl;
+
+    // map of multiple fields
+    typedef std::tuple<double, int, double, std::string> rowtype;
+    std::map<int, rowtype> big_map;
+
+    rowtype row1 = std::make_tuple(1.5, 2, 3.2, "sergio");
+    rowtype row2 = std::make_tuple(5, 6, 7.7, "licia");
+
+    big_map[1] = row1;
+    big_map[2] = row2;
+
+    double aa, ab, ac;
+    cout << " " << endl;
+    cout << "names:" << endl;
+    for (const auto& kv : big_map) {
+        cout << std::get<3>(kv.second) << endl;
+    }
 
     return 0;
 }
