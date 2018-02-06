@@ -95,18 +95,38 @@ int main(int argc, char *argv[])
     typedef std::tuple<double, int, double, std::string> rowtype;
     std::map<int, rowtype> big_map;
 
+    int k = 0;
+    for (const auto& kv : big_map) {
+        cout << k++ << endl;
+    }
+
     rowtype row1 = std::make_tuple(1.5, 2, 3.2, "sergio");
     rowtype row2 = std::make_tuple(5, 6, 7.7, "licia");
 
     big_map[1] = row1;
     big_map[2] = row2;
 
-    double aa, ab, ac;
     cout << " " << endl;
     cout << "names:" << endl;
     for (const auto& kv : big_map) {
         cout << std::get<3>(kv.second) << endl;
     }
+
+    rowtype row3 = std::make_tuple(5, 6, 7.7, "mami");
+
+    cout << " " << endl;
+    cout << "new names:" << endl;
+    big_map[1] = row3;
+    for (const auto& kv : big_map) {
+        cout << std::get<3>(kv.second) << endl;
+    }
+
+    // if statements
+    bool if1 = true;
+    bool if2 = false;
+    double printme = (if1) ? ((if2) ? 3 : 4) : 2;
+    cout << " " << endl;
+    cout << printme << endl;
 
     return 0;
 }
