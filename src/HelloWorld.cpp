@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <memory>
 
 using std::cout;
 using std::endl;
@@ -76,15 +77,20 @@ int main(int argc, char *argv[])
         2,
         3;
     cout << "eigen vector: " << endl;
-    cout << p << endl;
+    cout << p << " | magnitude: " << p.norm() << endl;
+
+    p.normalize();
+    cout << "eigen vector normalized: " << endl;
+    cout << p << " | magnitude: " << p.norm() << endl;
 
     Eigen::MatrixXd P;
-    P.resize(3,3);
-    P << 1, 2, 3,
-        4, 5, 6,
-        7, 8, 9;
+    P.resize(3,1);
+    P << 1,
+        4,
+        7;
     const int a = 3;
-    print_matrix<Eigen::Matrix<double, a, a>>(P);
+    const int b = 1;
+    print_matrix<Eigen::Matrix<double, a, b>>(P);
 
     // count character occurances in string
     std::string s = "the answer; should ;be ;; four";
@@ -106,16 +112,14 @@ int main(int argc, char *argv[])
     big_map[1] = row1;
     big_map[2] = row2;
 
-    cout << " " << endl;
-    cout << "names:" << endl;
+    cout << endl << "names:" << endl;
     for (const auto& kv : big_map) {
         cout << std::get<3>(kv.second) << endl;
     }
 
     rowtype row3 = std::make_tuple(5, 6, 7.7, "mami");
 
-    cout << " " << endl;
-    cout << "new names:" << endl;
+    cout << endl << "new names:" << endl;
     big_map[1] = row3;
     for (const auto& kv : big_map) {
         cout << std::get<3>(kv.second) << endl;
@@ -127,6 +131,12 @@ int main(int argc, char *argv[])
     double printme = (if1) ? ((if2) ? 3 : 4) : 2;
     cout << " " << endl;
     cout << printme << endl;
+
+    // shared pointers
+    auto foo = std::make_shared<int>(10);
+    cout << endl << "foo original: " << *foo << endl;
+    *foo = *foo + 20;
+    cout << "foo updated: " << *foo << endl;
 
     return 0;
 }
