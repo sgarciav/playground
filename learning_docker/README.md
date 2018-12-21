@@ -1,4 +1,4 @@
-# Summary
+# learning_docker
 
 Files in this directory are examples of different applications and services Docker
 has to offer.
