@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-#include "../include/helper_functions.h"
+
+#include <cmake_project/common/helper_functions.h>
 
 using namespace std;
 
@@ -39,10 +40,10 @@ for (i=0; i<input_len; i++)
 {
 	// get index of minimum number in original array
 	ind = getMinInd(array, input_len);
-	
+
 	// store minimum value in new array
 	sorted[i] = array[ind];
-	
+
 	// update original array
 	array[ind] = allmax;
 }
