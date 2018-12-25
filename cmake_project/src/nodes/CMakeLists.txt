@@ -1,12 +1,7 @@
 SubDirList(SUBDIRS ${CMAKE_CURRENT_SOURCE_DIR})
 
 # in case you need to remove a dir from the list
-list(REMOVE_ITEM SUBDIRS HelloWorld)
-list(REMOVE_ITEM SUBDIRS NumberOfElements)
 list(REMOVE_ITEM SUBDIRS ReadArrowKeys)
-list(REMOVE_ITEM SUBDIRS SortNums)
-list(REMOVE_ITEM SUBDIRS WorkTime)
-
 
 FOREACH(subdir ${SUBDIRS})
   add_subdirectory(${subdir})

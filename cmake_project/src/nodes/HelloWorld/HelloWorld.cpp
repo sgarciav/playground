@@ -18,13 +18,14 @@ void print_matrix(T A) {
     cout << A << endl;
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
+
     printf("%s\n", "Hello World");
 
-    for (int i=0; i < 15; i++) {
-        if (i == 10)
+    for (int i = 0; i < 15; i++) {
+        if (i == 10) {
             break;
+        }
 
         printf("%d) do me \n", i);
     }

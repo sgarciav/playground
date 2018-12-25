@@ -9,7 +9,7 @@ SET (LIB_RELEASE 1)
 file(GLOB SRCS *.cpp)
 
 if(NOT TARGET playground-opencv)
-  message(WARNING "Not building DisplayWebcom node. Depends on OpenCV.")
+  message(WARNING "Not building DisplayWebcam node. Depends on OpenCV.")
   return()
 endif()
 
@@ -26,11 +26,4 @@ set_target_properties(${LIBRARY_NAME}
   PROPERTIES
   SOVERSION ${LIB_MAJOR}
   VERSION ${_soversion}
-  )
-
-install(TARGETS ${LIBRARY_NAME}
-  # IMPORTANT: Add the library to the "export-set"
-  EXPORT ${PROJECT_NAME}-targets
-  RUNTIME DESTINATION bin
-  LIBRARY DESTINATION lib/${PROJECT_NAME}/node_libs
   )

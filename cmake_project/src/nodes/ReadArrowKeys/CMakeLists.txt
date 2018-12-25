@@ -1,7 +1,7 @@
 ##############################################
 #          Library Creation                  #
 ##############################################
-SET (LIBRARY_NAME Fibonacci_node)
+SET (LIBRARY_NAME ReadArrowKeys_node)
 SET (LIB_MAJOR 0)
 SET (LIB_MINOR 0)
 SET (LIB_RELEASE 1)
