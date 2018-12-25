@@ -12,14 +12,12 @@ project(playground)
 
 # fetch all the local directories for generated code
 get_filename_component(PLAYGROUND_INC_DIR ./include ABSOLUTE)
+get_filename_component(PROJECT_MODULES_DIR ./cmake/Modules ABSOLUTE)
 
 # include cmake files
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/Modules)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_MODULES_DIR})
 
 include(MacroSubDirList)
-
-# Recurse into src
-add_subdirectory(src)
 
 ########################################################
 # Find Eigen
@@ -37,10 +35,10 @@ if (NOT Eigen3_FOUND)
 endif()
 
 if (Eigen3_FOUND)
-  add_library(playground-eigen INTERFACE)
-  target_include_directories(playground-eigen SYSTEM INTERFACE ${EIGEN3_INCLUDE_DIR})
-  install(TARGETS playground-eigen EXPORT ${PROJECT_NAME}-targets)
-  list(APPEND PROJECT_TARGETS playground-eigen)
+  add_library(${PROJECT_NAME}-eigen INTERFACE)
+  target_include_directories(${PROJECT_NAME}-eigen SYSTEM INTERFACE ${EIGEN3_INCLUDE_DIR})
+  install(TARGETS ${PROJECT_NAME}-eigen EXPORT ${PROJECT_NAME}-targets)
+  list(APPEND PROJECT_TARGETS ${PROJECT_NAME}-eigen)
 else()
   message(WARNING "Eigen package not found. Install Eigen by executing: ") # TODO: how to install eigen
 endif()
@@ -51,27 +49,37 @@ endif()
 ########################################################
 find_package(OpenCV QUIET)
 if (OpenCV_FOUND)
-  add_library(playground-opencv INTERFACE)
-  target_include_directories(playground-opencv SYSTEM INTERFACE ${OpenCV_INCLUDE_DIRS})
-  # target_compile_definitions(playground-opencv INTERFACE -DENABLE_OPENCV=1)
-  install(TARGETS playground-opencv EXPORT ${PROJECT_NAME}-targets)
-  list(APPEND PROJECT_TARGETS playground-opencv)
+  add_library(${PROJECT_NAME}-opencv INTERFACE)
+  target_include_directories(${PROJECT_NAME}-opencv SYSTEM INTERFACE ${OpenCV_INCLUDE_DIRS})
+  target_link_libraries(${PROJECT_NAME}-opencv INTERFACE ${OpenCV_LIBRARIES})
+  install(TARGETS ${PROJECT_NAME}-opencv EXPORT ${PROJECT_NAME}-targets)
+  # install(TARGETS ${PROJECT_NAME}-opencv
+  #   EXPORT ${PROJECT_NAME}-targets
+  #   RUNTIME DESTINATION bin
+  #   LIBRARY DESTINATION lib)
+  list(APPEND PROJECT_TARGETS ${PROJECT_NAME}-opencv)
 else()
   messsage(WARNING "OpenCV package not found. Install OpenCV by executing:") # TODO: how to install opencv
 endif()
 
 
 #############################################################################
+# Recurse into src
+#############################################################################
+add_subdirectory(src)
+
+
+#############################################################################
 # Generate the cmake configuration files for the build tree
 #############################################################################
 list(LENGTH PROJECT_TARGETS NUM_TARGETS)
-# include(CMakePackageConfigHelpers)
+include(CMakePackageConfigHelpers)
 
-# configure_package_config_file(
-#   ${PROJECT_SOURCE_DIR}/cmake/Modules/project-config.cmake.in
-#   ${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
-#   INSTALL_DESTINATION ${PROJECT_BINARY_DIR}
-#   )
+configure_package_config_file(
+  ${PROJECT_SOURCE_DIR}/cmake/Modules/project-config.cmake.in
+  ${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
+  INSTALL_DESTINATION ${PROJECT_BINARY_DIR}
+  )
 
 # Export project export set to the build tree
 if(${NUM_TARGETS} GREATER 0)
@@ -86,14 +94,21 @@ endif()
 export(PACKAGE ${PROJECT_NAME})
 
 
+#############################################################################
+# Generate the cmake configuration files for the install tree
+#############################################################################
+set(CMAKE_CONFIG_DEST "${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake")
 
-# # display webcam
-# find_package(OpenCV REQUIRED)
-# add_executable(displayWebcam src/displayWebcam.cpp)
-# target_link_libraries(displayWebcam ${OpenCV_LIBS})
+configure_package_config_file(
+  ${PROJECT_SOURCE_DIR}/cmake/Modules/project-config.cmake.in
+  ${PROJECT_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/${PROJECT_NAME}-config.cmake
+  INSTALL_DESTINATION ${CMAKE_CONFIG_DEST}
+  )
 
-# # define library addition
-# set(helper_fun_SRCS helper_functions.cpp)
-
-# # add library
-# add_library(helper_functions SHARED ${helper_fun_SRCS})
+# Export project export set to the install tree
+if(${NUM_TARGETS} GREATER 0)
+  install(
+    EXPORT ${PROJECT_NAME}-targets
+    DESTINATION ${CMAKE_CONFIG_DEST}
+    )
+endif()

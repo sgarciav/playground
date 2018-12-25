@@ -1,6 +1,6 @@
 SubDirList(SUBDIRS ${CMAKE_CURRENT_SOURCE_DIR})
 
-list(REMOVE_ITEM SUBDIRS DisplayWebcam) # in case you need to remove a dir from the list
+# in case you need to remove a dir from the list
 list(REMOVE_ITEM SUBDIRS HelloWorld)
 list(REMOVE_ITEM SUBDIRS NumberOfElements)
 list(REMOVE_ITEM SUBDIRS ReadArrowKeys)

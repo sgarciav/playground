@@ -1,0 +1,7 @@
+# - Config file for the FooBar package
+# It defines the following variables
+#  CMAKE_MODULE_PATH - path to the directory where cmake modules live
+
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/${PROJECT_NAME}-targets.cmake")
