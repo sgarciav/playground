@@ -1,7 +1,7 @@
 SubDirList(SUBDIRS ${CMAKE_CURRENT_SOURCE_DIR})
 
 # in case you need to remove a dir from the list
-list(REMOVE_ITEM SUBDIRS ReadArrowKeys)
+# list(REMOVE_ITEM SUBDIRS ReadArrowKeys)
 
 FOREACH(subdir ${SUBDIRS})
   add_subdirectory(${subdir})

@@ -61,6 +61,22 @@ else()
 endif()
 
 
+########################################################
+# Find Curses (ncurses)
+########################################################
+set(CURSES_NEED_NCURSES True) # See: https://cmake.org/cmake/help/v3.0/module/FindCurses.html
+find_package(Curses QUIET)
+if (CURSES_FOUND)
+  add_library(${PROJECT_NAME}-curses INTERFACE)
+  target_include_directories(${PROJECT_NAME}-curses SYSTEM INTERFACE ${CURSES_INCLUDE_DIR})
+  target_link_libraries(${PROJECT_NAME}-curses INTERFACE ${CURSES_LIBRARIES})
+  install(TARGETS ${PROJECT_NAME}-curses EXPORT ${PROJECT_NAME}-targets)
+  list(APPEND PROJECT_TARGETS ${PROJECT_NAME}-curses)
+else()
+  message(WARNING "Curses package not found. Install Curses by executing: sudo apt-get install libncurses5-dev")
+endif()
+
+
 #############################################################################
 # Recurse into src
 #############################################################################
