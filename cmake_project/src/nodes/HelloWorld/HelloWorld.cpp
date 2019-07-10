@@ -139,5 +139,23 @@ int main(int argc, char *argv[]) {
     *foo = *foo + 20;
     cout << "foo updated: " << *foo << endl;
 
+    // return name of latest modified file in directory
+    std::string cmd_result;
+    std::string directory = "/home/sgarcia/Desktop";
+    FILE * stream;
+    const int max_buffer = 256;
+    char buffer[max_buffer];
+    std::string cmd = "ls -trp " + directory + " | grep -v / | tail -1";
+    cmd.append(" 2>&1");
+
+    stream = popen(cmd.c_str(), "r");
+    if (stream) {
+        while (!feof(stream))
+            if (fgets(buffer, max_buffer, stream) != NULL) cmd_result.append(buffer);
+        pclose(stream);
+    }
+    cout << " " << endl;
+    cout << "command result: " << cmd_result << endl;
+
     return 0;
 }
