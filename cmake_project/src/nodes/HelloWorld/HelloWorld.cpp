@@ -140,8 +140,8 @@ int main(int argc, char *argv[]) {
     cout << "foo updated: " << *foo << endl;
 
     // return name of latest modified file in directory
-    std::string cmd_result;
-    std::string directory = "/home/sgarcia/Desktop";
+    std::string cmd_result = "";
+    std::string directory = "/home/sgarcia33/Desktop/deleteme";
     FILE * stream;
     const int max_buffer = 256;
     char buffer[max_buffer];
@@ -150,10 +150,16 @@ int main(int argc, char *argv[]) {
 
     stream = popen(cmd.c_str(), "r");
     if (stream) {
-        while (!feof(stream))
-            if (fgets(buffer, max_buffer, stream) != NULL) cmd_result.append(buffer);
+        while (!feof(stream)) {
+            if (fgets(buffer, max_buffer, stream) != NULL) {
+                cmd_result.append(buffer);
+            }
+        }
         pclose(stream);
     }
+    // elimniate the return charcater at the end of the result
+    cmd_result.erase(std::remove(cmd_result.begin(), cmd_result.end(), '\n'), cmd_result.end());
+
     cout << " " << endl;
     cout << "command result: " << cmd_result << endl;
 
