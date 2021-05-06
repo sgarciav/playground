@@ -34,6 +34,11 @@ inside the corresponding directory.
 A collection of various python and shell scripts that are or have been used as
 secondary scripts for a goal or for testing purposes.
 
+## machine_learning
+
+A collection of ML and AI algorithms, notes, and source code. These should serve
+as the basis for further learning ML.
+
 # Authors
 
 Sergio Garcia-Vergara <sergiodotgarcia@gmail.com>
