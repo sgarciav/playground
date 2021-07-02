@@ -8,14 +8,10 @@
 #include <map>
 #include <memory>
 
-using std::cout;
-using std::endl;
-using std::vector;
-
 template <typename T>
 void print_matrix(T A) {
-    cout << "eigen matrix: " << endl;
-    cout << A << endl;
+    std::cout << "eigen matrix: " << std::endl;
+    std::cout << A << std::endl;
 }
 
 int main(int argc, char *argv[]) {
@@ -40,26 +36,34 @@ int main(int argc, char *argv[]) {
 
     bool one_str = str1.compare(str2);
     bool two_str = str1.compare(str3);
-    cout << "different: " << one_str << endl;
-    cout << "same: " << two_str << endl;
-    cout << concat << endl;
+    std::cout << "different: " << one_str << std::endl;
+    std::cout << "same: " << two_str << std::endl;
+    std::cout << concat << std::endl;
 
     // play with vectors
-    vector<double> vec1;
+    std::vector<int> vec1;
     for (int i = 0; i < 10; i++) {
         vec1.push_back(i);
     }
     for (int i = 0; i < vec1.size(); i++) {
-        cout << vec1[i] << endl;
+        std::cout << vec1[i] << std::endl;
+    }
+
+    // check if element is inside vector
+    std::vector<int>::iterator it;
+    it = std::find(vec1.begin(), vec1.end(), 8);
+    if (it != vec1.end())
+    {
+        std::cout << "ELEMENT INSIDE VECTOR" << std::endl;
     }
 
     // test input handling
     if (argc > 1) {
         std::string input = argv[1];
-        cout << "input: " << input << endl;
-        cout << "number of inputs: " << argc << endl;
+        std::cout << "input: " << input << std::endl;
+        std::cout << "number of inputs: " << argc << std::endl;
         if (argc == 3) {
-            cout << "ERROR: Need as input the robot name." << endl;
+            std::cout << "ERROR: Need as input the robot name." << std::endl;
             exit(EXIT_FAILURE);
         }
     }
@@ -69,7 +73,7 @@ int main(int argc, char *argv[]) {
     one = -1.434;
     two = 2.434;
     three = -325.8745;
-    cout << fabs(one) << ", " << fabs(two) << ", " << fabs(three) << endl;
+    std::cout << fabs(one) << ", " << fabs(two) << ", " << fabs(three) << std::endl;
 
     // test Eigen vector
     // To compile: g++ -o HelloWorld ../src/HelloWorld.cpp -std=c++11 -I/usr/include/eigen3
@@ -77,12 +81,12 @@ int main(int argc, char *argv[]) {
     p << 1,
         2,
         3;
-    cout << "eigen vector: " << endl;
-    cout << p << " | magnitude: " << p.norm() << endl;
+    std::cout << "eigen vector: " << std::endl;
+    std::cout << p << " | magnitude: " << p.norm() << std::endl;
 
     p.normalize();
-    cout << "eigen vector normalized: " << endl;
-    cout << p << " | magnitude: " << p.norm() << endl;
+    std::cout << "eigen vector normalized: " << std::endl;
+    std::cout << p << " | magnitude: " << p.norm() << std::endl;
 
     Eigen::MatrixXd P;
     P.resize(3,1);
@@ -96,7 +100,7 @@ int main(int argc, char *argv[]) {
     // count character occurances in string
     std::string s = "the answer; should ;be ;; four";
     size_t n = std::count(s.begin(), s.end(), ';');
-    cout << "; count " << n << endl;
+    std::cout << "; count " << n << std::endl;
 
     // map of multiple fields
     typedef std::tuple<double, int, double, std::string> rowtype;
@@ -104,7 +108,7 @@ int main(int argc, char *argv[]) {
 
     int k = 0;
     for (const auto& kv : big_map) {
-        cout << k++ << endl;
+        std::cout << k++ << std::endl;
     }
 
     rowtype row1 = std::make_tuple(1.5, 2, 3.2, "sergio");
@@ -113,31 +117,31 @@ int main(int argc, char *argv[]) {
     big_map[1] = row1;
     big_map[2] = row2;
 
-    cout << endl << "names:" << endl;
+    std::cout << std::endl << "names:" << std::endl;
     for (const auto& kv : big_map) {
-        cout << std::get<3>(kv.second) << endl;
+        std::cout << std::get<3>(kv.second) << std::endl;
     }
 
     rowtype row3 = std::make_tuple(5, 6, 7.7, "mami");
 
-    cout << endl << "new names:" << endl;
+    std::cout << std::endl << "new names:" << std::endl;
     big_map[1] = row3;
     for (const auto& kv : big_map) {
-        cout << std::get<3>(kv.second) << endl;
+        std::cout << std::get<3>(kv.second) << std::endl;
     }
 
     // if statements
     bool if1 = true;
     bool if2 = false;
     double printme = (if1) ? ((if2) ? 3 : 4) : 2;
-    cout << " " << endl;
-    cout << printme << endl;
+    std::cout << " " << std::endl;
+    std::cout << printme << std::endl;
 
     // shared pointers
     auto foo = std::make_shared<int>(10);
-    cout << endl << "foo original: " << *foo << endl;
+    std::cout << std::endl << "foo original: " << *foo << std::endl;
     *foo = *foo + 20;
-    cout << "foo updated: " << *foo << endl;
+    std::cout << "foo updated: " << *foo << std::endl;
 
     // return name of latest modified file in directory
     std::string cmd_result = "";
@@ -160,8 +164,8 @@ int main(int argc, char *argv[]) {
     // elimniate the return charcater at the end of the result
     cmd_result.erase(std::remove(cmd_result.begin(), cmd_result.end(), '\n'), cmd_result.end());
 
-    cout << " " << endl;
-    cout << "command result: " << cmd_result << endl;
+    std::cout << " " << std::endl;
+    std::cout << "command result: " << cmd_result << std::endl;
 
     return 0;
 }
