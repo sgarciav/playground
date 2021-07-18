@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # pylint: disable=C0103
 
@@ -14,7 +14,7 @@ def shift_90deg():
 
     d = end - start
     yaw = math.atan2(d[1], d[0])
-    print yaw * 180 / np.pi
+    print(yaw * 180 / np.pi)
 
     h = np.linalg.norm(d) / 2
     a = start[0] + h * math.cos(np.pi / 2.0 - yaw)
@@ -22,8 +22,8 @@ def shift_90deg():
 
     x = np.array([a, start[0], end[0]])
     y = np.array([b, start[1], end[1]])
-    print x
-    print y
+    print(x)
+    print(y)
 
     plt.scatter(x, y, s=35)
     plt.plot(x, y, 'r--')
