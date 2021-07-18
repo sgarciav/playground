@@ -1,4 +1,6 @@
 #!/bin/bash
 
 find . -name "*pyc" -o \
-     -name "*pycache*" | xargs rm -rf
+     -name "*pycache*" -o \
+     -name "#*" -o \
+     -name ".#*" | xargs rm -rf
