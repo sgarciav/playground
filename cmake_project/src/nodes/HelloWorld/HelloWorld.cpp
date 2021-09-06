@@ -40,6 +40,14 @@ int main(int argc, char *argv[]) {
     std::cout << "same: " << two_str << std::endl;
     std::cout << concat << std::endl;
 
+    // replace strings
+    std::string to_replace = "gio";
+    size_t position;
+    while ((position = str1.find(to_replace)) != std::string::npos) {
+        str1.replace(position, to_replace.size(), "hahahah");
+    }
+    std::cout << "string replaced: " << str1 << std::endl;
+
     // play with vectors
     std::vector<int> vec1;
     for (int i = 0; i < 10; i++) {
