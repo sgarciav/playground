@@ -105,6 +105,11 @@ int main(int argc, char *argv[]) {
     const int b = 1;
     print_matrix<Eigen::Matrix<double, a, b>>(P);
 
+    Eigen::Vector2d pt;
+    pt.x() = 2;
+    pt.y() = 3.2;
+    std::cout << "eigen point: " << pt << std::endl;
+
     // count character occurances in string
     std::string s = "the answer; should ;be ;; four";
     size_t n = std::count(s.begin(), s.end(), ';');
