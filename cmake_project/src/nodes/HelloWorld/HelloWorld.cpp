@@ -14,6 +14,10 @@ void print_matrix(T A) {
     std::cout << A << std::endl;
 }
 
+void automatic_result(int a, int& y) {
+    y = a + 1;
+}
+
 int main(int argc, char *argv[]) {
 
     printf("%s\n", "Hello World");
@@ -155,6 +159,12 @@ int main(int argc, char *argv[]) {
     std::cout << std::endl << "foo original: " << *foo << std::endl;
     *foo = *foo + 20;
     std::cout << "foo updated: " << *foo << std::endl;
+
+    // automatic result in method call parameters
+    int org_num = 5;
+    int updated_num = 0;
+    automatic_result(org_num, updated_num);
+    std::cout << "automatic result should be 6: " << updated_num << std::endl;
 
     // return name of latest modified file in directory
     std::string cmd_result = "";
