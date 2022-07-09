@@ -111,8 +111,14 @@ int main(int argc, char *argv[]) {
 
     Eigen::Vector2d pt;
     pt.x() = 2;
-    pt.y() = 3.2;
+    pt.y() = 3;
     std::cout << "eigen point: " << pt << std::endl;
+
+    // dot product
+    Eigen::Vector2d pt2;
+    pt2.x() = 4;
+    pt2.y() = 1;
+    std::cout << "dot product: " << pt2.dot(pt) << std::endl;
 
     // count character occurances in string
     std::string s = "the answer; should ;be ;; four";
