@@ -110,15 +110,24 @@ int main(int argc, char *argv[]) {
     print_matrix<Eigen::Matrix<double, a, b>>(P);
 
     Eigen::Vector2d pt;
-    pt.x() = 2;
-    pt.y() = 3;
+    pt.x() = 6;
+    pt.y() = 5;
     std::cout << "eigen point: " << pt << std::endl;
 
     // dot product
     Eigen::Vector2d pt2;
-    pt2.x() = 4;
-    pt2.y() = 1;
-    std::cout << "dot product: " << pt2.dot(pt) << std::endl;
+    pt2.x() = 6;
+    pt2.y() = 6;
+    std::cout << "dot product (should be 66): " << pt2.dot(pt) << std::endl;
+
+    // angle between vectors
+    Eigen::Vector2d center;
+    center.x() = 5;
+    center.y() = 5;
+    Eigen::Vector2d v1 = pt - center;
+    Eigen::Vector2d v2 = pt2 - center;
+    float theta = acos(v1.dot(v2) / (v1.norm() * v2.norm()));
+    std::cout << "angle between vectors: " << theta * 180.0 / M_PI << std::endl;
 
     // count character occurances in string
     std::string s = "the answer; should ;be ;; four";
