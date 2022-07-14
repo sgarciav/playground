@@ -14,6 +14,14 @@ void print_matrix(T A) {
     std::cout << A << std::endl;
 }
 
+struct DataStruct {
+    float x;
+    int a;
+    float add_me() {
+        return x + a;
+    }
+};
+
 int main(int argc, char *argv[]) {
 
     printf("%s\n", "Hello World");
@@ -144,6 +152,13 @@ int main(int argc, char *argv[]) {
     double printme = (if1) ? ((if2) ? 3 : 4) : 2;
     std::cout << " " << std::endl;
     std::cout << printme << std::endl;
+
+    // test the data structure
+    DataStruct data_struct;
+    data_struct.x = 12.2;
+    data_struct.a = 1;
+    float struct_result = data_struct.add_me();
+    std::cout << "data struct add me: " << struct_result << std::endl;
 
     // shared pointers
     auto foo = std::make_shared<int>(10);
