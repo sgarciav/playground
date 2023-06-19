@@ -8,6 +8,8 @@
 #include <map>
 #include <memory>
 
+#include "cmake_project/common/my_template_class.h"
+
 template <typename T>
 void print_matrix(T A) {
     std::cout << "eigen matrix: " << std::endl;
@@ -219,6 +221,12 @@ int main(int argc, char *argv[]) {
 
     std::cout << " " << std::endl;
     std::cout << "command result: " << cmd_result << std::endl;
+
+    // test the template class
+    MyTemplateClass<int> class_int;
+    class_int.setA(5);
+    std::cout << " " << std::endl;
+    std::cout << "template class result: " << class_int.getA() << std::endl;
 
     return 0;
 }
