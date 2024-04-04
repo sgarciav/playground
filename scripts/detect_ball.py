@@ -32,7 +32,7 @@ def main(args=None):
         for (x, y, r) in circles:
             cv2.circle(og_image, (x, y), r, (0, 0, 255), 4)
             cv2.circle(og_image, (x, y), 1, (0, 0, 255), 4)  # Center of the circle
-            print("Center coordinates (x, y):", x, y)
+            print("Center coordinates ({}, {}) | radius: {}".format(x, y, r))
 
         # Display the image
         cv2.imshow("Detected ball", og_image)
