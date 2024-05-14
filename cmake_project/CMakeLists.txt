@@ -42,7 +42,7 @@ if (Eigen3_FOUND)
   install(TARGETS ${PROJECT_NAME}-eigen EXPORT ${PROJECT_NAME}-targets)
   list(APPEND PROJECT_TARGETS ${PROJECT_NAME}-eigen)
 else()
-  message(WARNING "Eigen package not found. Install Eigen by executing: ") # TODO: how to install eigen
+  message(WARNING "Eigen package not found. Install the libeigen3-dev package")
 endif()
 
 
@@ -57,7 +57,7 @@ if (OpenCV_FOUND)
   install(TARGETS ${PROJECT_NAME}-opencv EXPORT ${PROJECT_NAME}-targets)
   list(APPEND PROJECT_TARGETS ${PROJECT_NAME}-opencv)
 else()
-  messsage(WARNING "OpenCV package not found. Install OpenCV by executing:") # TODO: how to install opencv
+  message(WARNING "OpenCV package not found. Install OpenCV by executing:") # TODO: how to install opencv
 endif()
 
 
