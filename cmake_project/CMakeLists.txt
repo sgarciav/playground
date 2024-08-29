@@ -49,6 +49,9 @@ endif()
 ########################################################
 # Find OpenCV
 ########################################################
+# # Set the path to your OpenCV installation
+# set(OpenCV_DIR /home/ros/git-repos/opencv/build) # TODO: Tmp dir to run inside Docker container
+
 find_package(OpenCV QUIET)
 if (OpenCV_FOUND)
   add_library(${PROJECT_NAME}-opencv INTERFACE)
