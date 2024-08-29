@@ -28,6 +28,25 @@ void automatic_result(int a, int& y) {
     y = a + 1;
 }
 
+std::vector<std::string> split(std::string input, const std::string & delim)
+{
+  size_t pos = 0;
+  std::vector<std::string> out;
+
+  while ((pos = input.find(delim)) != std::string::npos)
+  {
+    auto token = input.substr(0, pos);
+    if (token.size() > 0) {
+      out.push_back(token);
+    }
+    input.erase(0, pos + delim.length());
+  }
+  out.push_back(input);
+
+  return out;
+}
+
+
 int main(int argc, char *argv[]) {
 
     printf("%s\n", "Hello World");
@@ -227,6 +246,21 @@ int main(int argc, char *argv[]) {
     class_int.setA(5);
     std::cout << " " << std::endl;
     std::cout << "template class result: " << class_int.getA() << std::endl;
+
+    // test the split command
+    std::string info_topic;
+    auto tokens = split("/camera_down_0/rgb/image_raw", "/");
+
+    if (tokens.size() > 0)
+    {
+      for (size_t ii = 0; ii < tokens.size() - 1; ++ii)
+      {
+        info_topic.append("/");
+        info_topic.append(tokens[ii]);
+      }
+    }
+    info_topic += "/camera_info";
+    std::cout << "new topic name: " << info_topic << std::endl;
 
     return 0;
 }
