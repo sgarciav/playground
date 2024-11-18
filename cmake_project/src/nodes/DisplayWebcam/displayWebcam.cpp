@@ -4,36 +4,36 @@
 // to avoid having to use cv:: for each variable
 using namespace cv;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
+  VideoCapture cap;
+  Mat frame;
 
-    // variable declarations
-    VideoCapture cap;
-    Mat frame;
+  // open the default camera, use something different from 0 otherwise;
+  if(!cap.open(0))
+  {
+    printf("No camera recognized.\n");
+    return 1;
+  }
 
-    // open the default camera, use something different from 0 otherwise;
-    if(!cap.open(0)) {
-        printf("No camera recognized.\n");
-        return 1;
+  // display continuously
+  while(true)
+  {
+    // create image frames from capture
+    cap >> frame;
+
+    // show and save frame as long as frame is not empty
+    if (!frame.empty()) {
+      imshow("smile! :)", frame);
+      // imwrite("test.jpeg", frame); // uncomment to write img to file
     }
 
-    // display continuously
-    while(true) {
-
-        // create image frames from capture
-        cap >> frame;
-
-        // show and save frame as long as frame is not empty
-        if (!frame.empty()) {
-            imshow("smile! :)", frame);
-            imwrite("test.jpeg", frame);
-        }
-
-        // stop capturing by pressing ESC
-        if (waitKey(1) == 27) {
-            break;
-        }
+    // stop capturing by pressing ESC
+    if (waitKey(1) == 27) {
+      break;
     }
+  }
 
-    // the camera will be closed automatically upon exit
-    return 0;
+  // the camera will be closed automatically upon exit
+  return 0;
 }
