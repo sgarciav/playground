@@ -36,7 +36,6 @@ def show_one_mask(anns, mask_num, borders=True):
         contours = [cv2.approxPolyDP(contour, epsilon=0.01, closed=True) for contour in contours]
         cv2.drawContours(img, contours, -1, (0, 0, 1, 0.4), thickness=1)
 
-    print('-- Bounding box (XYWH): {}'.format(sorted_anns[mask_num]['bbox']))
     ax.imshow(img)
 
 
@@ -126,9 +125,19 @@ def main():
     plt.axis('off')
 
     # 5. Mask with largest area
+    mask_num = 1
+    sorted_masks = sorted(masks, key=(lambda x: x['area']), reverse=True)
+    bbox_floats = sorted_masks[mask_num]['bbox']
+    bbox = [int(x) for x in bbox_floats]
+    print('-- Bounding box (XYWH): {}'.format(bbox))
+    ul = [bbox[0], bbox[1]]
+    br = [bbox[2] + bbox[0], bbox[3] + bbox[1]]
+    bbox_img = cv2.rectangle(image, ul, br,
+                             color=(0, 255, 0), thickness=3)
+
     plt.figure(figsize=(20, 20))
-    plt.imshow(image)
-    show_one_mask(masks, 1) # TODO: Need better way to select mask of interest
+    plt.imshow(bbox_img)
+    show_one_mask(masks, mask_num) # TODO: Need better way to select mask of interest
     plt.axis('off')
 
     # End. Show all plots
