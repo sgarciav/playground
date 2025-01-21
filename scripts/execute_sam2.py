@@ -10,10 +10,34 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 import sys
+import cv2
 import argparse
 
 sam2_checkpoint = "/home/sergio/git-repos/3rd-party/sam2/checkpoints/sam2.1_hiera_large.pt"
 model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml"
+
+
+def show_one_mask(anns, mask_num, borders=True):
+    if len(anns) == 0:
+        return
+    sorted_anns = sorted(anns, key=(lambda x: x['area']), reverse=True)
+    ax = plt.gca()
+    ax.set_autoscale_on(False)
+
+    img = np.ones((sorted_anns[0]['segmentation'].shape[0], sorted_anns[0]['segmentation'].shape[1], 4))
+    img[:, :, 3] = 0
+
+    m = sorted_anns[mask_num]['segmentation']
+    color_mask = np.concatenate([np.random.random(3), [0.5]])
+    img[m] = color_mask
+    if borders:
+        contours, _ = cv2.findContours(m.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        # Try to smooth contours
+        contours = [cv2.approxPolyDP(contour, epsilon=0.01, closed=True) for contour in contours]
+        cv2.drawContours(img, contours, -1, (0, 0, 1, 0.4), thickness=1)
+
+    print('-- Bounding box (XYWH): {}'.format(sorted_anns[mask_num]['bbox']))
+    ax.imshow(img)
 
 
 def show_anns(anns, borders=True):
@@ -30,7 +54,6 @@ def show_anns(anns, borders=True):
         color_mask = np.concatenate([np.random.random(3), [0.5]])
         img[m] = color_mask
         if borders:
-            import cv2
             contours, _ = cv2.findContours(m.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
             # Try to smooth contours
             contours = [cv2.approxPolyDP(contour, epsilon=0.01, closed=True) for contour in contours]
@@ -45,6 +68,10 @@ def main():
                         type=str,
                         default=None,
                         help='Absolute or relative path to the input image.')
+    parser.add_argument('-s', '--show-original-image',
+                        action='store_true',
+                        default=False,
+                        help='Display original image before processing.')
 
     args = parser.parse_args()
 
@@ -52,10 +79,10 @@ def main():
     image = Image.open(args.filename)
     image = np.array(image.convert("RGB"))
 
-    plt.figure(figsize=(20, 20))
-    plt.imshow(image)
-    plt.axis('off')
-    # plt.show()
+    if args.show_original_image:
+        plt.figure(figsize=(20, 20))
+        plt.imshow(image)
+        plt.axis('off')
 
     # 2. Select device
     if torch.cuda.is_available():
@@ -96,6 +123,12 @@ def main():
     plt.figure(figsize=(20, 20))
     plt.imshow(image)
     show_anns(masks)
+    plt.axis('off')
+
+    # 5. Mask with largest area
+    plt.figure(figsize=(20, 20))
+    plt.imshow(image)
+    show_one_mask(masks, 1) # TODO: Need better way to select mask of interest
     plt.axis('off')
 
     # End. Show all plots
