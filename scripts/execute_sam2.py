@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# See: https://github.com/facebookresearch/sam2
+
 import torch
 from sam2.build_sam import build_sam2
 from sam2.automatic_mask_generator import SAM2AutomaticMaskGenerator
@@ -8,10 +10,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 import sys
-# import cv2
 import argparse
 
-sam2_checkpoint = "../checkpoints/sam2.1_hiera_large.pt"
+sam2_checkpoint = "/home/sergio/git-repos/3rd-party/sam2/checkpoints/sam2.1_hiera_large.pt"
 model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml"
 
 
@@ -72,8 +73,22 @@ def main():
             torch.backends.cudnn.allow_tf32 = True
 
     # 3. Automatic Mask Generator
+    print(f"-- Running the mask generator")
     sam2 = build_sam2(model_cfg, sam2_checkpoint, device=device, apply_postprocessing=False)
-    mask_generator = SAM2AutomaticMaskGenerator(sam2)
+    # mask_generator = SAM2AutomaticMaskGenerator(sam2)
+    mask_generator = SAM2AutomaticMaskGenerator(
+        model=sam2,
+        points_per_side=32,
+        points_per_batch=64,
+        pred_iou_thresh=0.7,
+        stability_score_thresh=0.92,
+        stability_score_offset=0.7,
+        crop_n_layers=1,
+        box_nms_thresh=0.7,
+        crop_n_points_downscale_factor=2,
+        min_mask_region_area=10.0,
+        use_m2m=False,
+    )
     masks = mask_generator.generate(image)
     print(f"-- Number of masks: {len(masks)}")
 
