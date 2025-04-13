@@ -10,30 +10,30 @@ class ManipulateCSVFile():
         self.verbose = verbose
 
 
-    def print_contents(self):
+    def printContents(self):
         ''' print the contents of the csv file '''
         if self.verbose:
             print("-- Contents of the csv file: {}".format(self.filename))
         # open the CSV file
-        with open(self.filename, mode = 'r') as file:
+        with open(self.filename, mode = 'r') as f:
             # reading the CSV file
-            csv_file = csv.reader(file)
-            for lines in csv_file:
-                print(lines)
+            csv_file = csv.reader(f)
+            data = list(csv_file)
+        print(data)
 
 
-    def get_column_data(self, column_name):
+    def getColumnData(self, column_name):
         ''' return the contents in the column as a numpy array - return False if it doesn't exist '''
         # check if the column exists in the current file
         all_data = pandas.read_csv(self.filename)
         if column_name not in all_data.columns:
-            print("-- ERROR! Column {} not found in {}".format(column_name, self.filename))
+            print("-- ERROR! Column ({}) not found in ({})".format(column_name, self.filename))
             return False
 
         # get the column data
         df = pandas.read_csv(self.filename, usecols=[column_name])
         if self.verbose:
-            print("-- Column {} from {} obtained successfuly".format(column_name, self.filename))
+            print("-- Column ({}) in ({}) obtained successfully.".format(column_name, self.filename))
 
         # convert panda data frame to numpy array
         column_data_array = df.to_numpy()
