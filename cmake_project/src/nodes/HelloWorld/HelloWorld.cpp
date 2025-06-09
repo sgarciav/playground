@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+#include <sstream>
 #include <iostream>
 #include <vector>
 #include <map>
@@ -261,6 +262,15 @@ int main(int argc, char *argv[]) {
     }
     info_topic += "/camera_info";
     std::cout << "new topic name: " << info_topic << std::endl;
+
+    // string to bool | string HAS to be lower case
+    std::string str = "True";
+    transform(str.begin(), str.end(), str.begin(),
+              ::tolower);
+    std::istringstream is(str);
+    bool str2b;
+    is >> std::boolalpha >> str2b;
+    std::cout << "string: " << str.c_str() << " | bool: " << str2b << std::endl;
 
     return 0;
 }
