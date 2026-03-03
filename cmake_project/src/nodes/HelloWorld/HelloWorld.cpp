@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <cstdlib>
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -271,6 +272,12 @@ int main(int argc, char *argv[]) {
     bool str2b;
     is >> std::boolalpha >> str2b;
     std::cout << "string: " << str.c_str() << " | bool: " << str2b << std::endl;
+
+    // Play a sound file
+    // Requires: #include <cstdlib>
+    std::cout << "Sound ... " << std::endl;
+    system("aplay /usr/share/sounds/alsa/Front_Center.wav > /dev/null 2>&1 &");
+    std::cout << "done ... " << std::endl;
 
     return 0;
 }
