@@ -18,6 +18,7 @@ categories = {
     'Entertainment' : 0,
     'Misc' : 0,
     'Food' : 0,
+    'Health' : 0,
 }
 
 def main():
@@ -34,30 +35,47 @@ def main():
     csv_obj = ManipulateCSVFile.ManipulateCSVFile(filename, False)
     column_data = csv_obj.getColumnData(column_name)
 
-    # Order of data: Date, Name, Price
-    grouped_list = list(zip(*[iter(column_data.tolist())]*3))
+    # Clean the data: filter out empty strings AND 'nan' values caused by empty CSV rows
+    raw_data = [str(x).strip() for x in column_data.tolist() if str(x).strip() and str(x).strip().lower() != 'nan']
+
+    # print(raw_data)
 
     total_spending = 0
-    for kv in grouped_list:
-        name = str(kv[1])
-        price = float(kv[2][0])
-        total_spending += price
+    current_name = ""
 
-        counted = False
-        for cat in categories:
-            if cat in name:
-                categories[cat] += price
-                counted = True
-                break
+    for item in raw_data:
+        item = item[2:-2] # Remove brakets
+        try:
+            # If the item can be cast to a float, it's the price.
+            # This triggers the end of the current record.
+            price = float(item)
 
-        if not counted:
-            print(f'Item ({name}) not counted')
+            total_spending += price
+
+            counted = False
+            for cat in categories:
+                if cat in current_name:
+                    categories[cat] += price
+                    counted = True
+                    break
+
+            if not counted:
+                print(f'Item: ({current_name}) not counted')
+
+            # Reset name for the next transaction
+            current_name = ""
+
+        except ValueError:
+            # If it's not a float, it's either a date or a description.
+            # We ignore short date strings (e.g., "3/16") and grab the first description line.
+            if not current_name and not (len(item) <= 5 and '/' in item):
+                current_name = item
 
     # Print results
     print('')
-    print(f'Total travel spend: ${total_spending}')
-    for c in categories.items():
-        print(c)
+    print(f'Total travel spend: ${total_spending:.2f}')
+    for cat, amount in categories.items():
+        print(f'{cat}: ${amount:.2f}')
 
 if __name__ == '__main__':
     sys.exit(main())
