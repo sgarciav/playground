@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Define the parent directory to scan (defaults to current directory)
+TARGET_DIR="${1:-.}"
+
+# Verify if the provided path is a valid directory
+if [ ! -d "$TARGET_DIR" ]; then
+    echo "Error: $TARGET_DIR is not a valid directory."
+    exit 1
+fi
+
+echo "Scanning immediate subdirectories in: $TARGET_DIR"
+echo "------------------------------------------------"
+
+# Find immediate subdirectories and safely loop through them
+find "$TARGET_DIR" -maxdepth 1 -mindepth 1 -type d -print0 | while IFS= read -r -d '' dir; do
+    # Count only regular files inside this specific directory
+    file_count=$(find "$dir" -maxdepth 1 -type f | wc -l)
+
+    # Output the result
+    echo "Directory: $dir -> Files: $file_count"
+done
