@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Define the parent directory to scan (defaults to current directory)
+DIRECTORIES=("clamp-allis-tissue-mirror-w5x6teeth__7.5in"
+             "clamp-kocher-mirror-straight__7.5in"
+             "needleholder-ryder-french-eye__7in"
+             "sponge-stick-serrated-straight__9.5in"
+             "clamp-babcock__6in"
+             "clamp-mosquito-jackson-curved-fine-tip__5in"
+             "scissors-jameson-supercut-curved__150mm"
+             "towel-clip-backhaus-mirror__5.25in"
+             "clamp-crile-hemostatic-curved__5.5in"
+             "clamp-right-angle-meeker__7in"
+             "scissors-mayo-curved__6.75in"
+             "clamp-gemini-gallblader-medium__7in"
+             "needleholder-mayo-hegar-heavy-large-mouth__7in"
+             "scissors-mayo-suture-straight__6.75in"
+             "clamp-kelly-blunt-curved__6.33in"
+             "needleholder-plastic__5.5in"
+             "scissors-metzenbaum-carb-edge-fine-tip-curved__7in"
+            )
+
+for item in "${my_list[@]}"; do
+    mkdir -p "$item"
+done
